@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import GlobalContext from "../context/GlobalContext";
 
 export function RegisterForm() {
-  const {hanldeInputLogin, inputLogin, handleRegister} = useContext(GlobalContext)
+  const {isFunction, isState} = useContext(GlobalContext)
   return (
     <Card
       color="transparent"
@@ -30,10 +30,22 @@ export function RegisterForm() {
           </Typography>
           <Input
             size="lg"
-            placeholder="name@mail.com"
             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
             name="name"
-            onChange={hanldeInputLogin}
+            onChange={isFunction.hanldeInputLogin}
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
+            required
+          />
+          <Typography variant="h6" color="blue-gray" className="-mb-3">
+            Image URL
+          </Typography>
+          <Input
+            size="lg"
+            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+            name="image_url"
+            onChange={isFunction.hanldeInputLogin}
             labelProps={{
               className: "before:content-none after:content-none",
             }}
@@ -47,7 +59,7 @@ export function RegisterForm() {
             placeholder="name@mail.com"
             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
             name="email"
-            onChange={hanldeInputLogin}
+            onChange={isFunction.hanldeInputLogin}
             labelProps={{
               className: "before:content-none after:content-none",
             }}
@@ -62,7 +74,7 @@ export function RegisterForm() {
             placeholder="********"
             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
             name="password"
-            onChange={hanldeInputLogin}
+            onChange={isFunction.hanldeInputLogin}
             labelProps={{
               className: "before:content-none after:content-none",
             }}
@@ -86,7 +98,7 @@ export function RegisterForm() {
           }
           containerProps={{ className: "-ml-2.5" }}
         />
-        <Button className="mt-6" fullWidth onClick={handleRegister}>
+        <Button className="mt-6" fullWidth onClick={isFunction.handleRegister}>
           sign up
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
@@ -101,7 +113,7 @@ export function RegisterForm() {
 }
 
 export function LoginForm() {
-  const {hanldeInputLogin, inputLogin, handleLogin} = useContext(GlobalContext)
+  const {isState, isFunction} = useContext(GlobalContext)
 
   return (
     <Card
@@ -126,8 +138,8 @@ export function LoginForm() {
             required
             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
             name="email"
-            value={inputLogin.email}
-            onChange={hanldeInputLogin}
+            value={isState.inputLogin.email}
+            onChange={isFunction.hanldeInputLogin}
             labelProps={{
               className: "before:content-none after:content-none",
             }}
@@ -141,8 +153,8 @@ export function LoginForm() {
             placeholder="********"
             name="password"
             className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-            value={inputLogin.password}
-            onChange={hanldeInputLogin}
+            value={isState.inputLogin.password}
+            onChange={isFunction.hanldeInputLogin}
             labelProps={{
               className: "before:content-none after:content-none",
             }}
@@ -170,7 +182,7 @@ export function LoginForm() {
           required
         />
         <Button
-          onClick={handleLogin}
+          onClick={isFunction.handleLogin}
           className="mt-6"
           fullWidth
         >

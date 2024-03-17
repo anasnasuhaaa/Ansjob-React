@@ -10,10 +10,10 @@ import { useContext } from "react";
 import GlobalContext from "../context/GlobalContext";
 
 export default function CardComponent() {
-  const { data, handleDetail } = useContext(GlobalContext);
+  const { isState, isFunction } = useContext(GlobalContext);
 
 
-  return data.map((res, i) => (
+  return isState.data.map((res, i) => (
     <Card key={i} className=" flex-col md:flex-row  max-w-[36rem] mt-3">
       <CardHeader
         shadow={false}
@@ -44,7 +44,7 @@ export default function CardComponent() {
         key={res.id}
           variant="text"
           className="flex bg-black text-white hover:bg-gray-800 items-center gap-2"
-          onClick={() => handleDetail(res)}
+          onClick={() => isFunction.handleDetail(res)}
         >
           See Detail
           <svg

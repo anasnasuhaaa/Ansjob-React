@@ -18,7 +18,7 @@ export default function JobDetail() {
             {dataDetail.title} | {dataDetail.company_name}
           </h1>
           <h1>
-            <i class="fa-sharp fa-solid fa-location-dot"></i>{" "}
+            <i className="fa-sharp fa-solid fa-location-dot"></i>{" "}
             {dataDetail.company_city} | {dataDetail.job_tenure} |{" "}
             {dataDetail.job_type}
           </h1>

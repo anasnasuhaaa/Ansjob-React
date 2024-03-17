@@ -16,7 +16,6 @@ function App() {
     <>
       <BrowserRouter>
       <GlobalProvider> 
-        {/* <NavbarComponent /> */}
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/register" element={<SignUp/>}></Route>
@@ -30,7 +29,6 @@ function App() {
           <Route path="/job-vacancy/:id" element={<JobDetail />}></Route>
           <Route path="*" element={<NotFound/>}></Route>
         </Routes>
-        {/* <Footer /> */}
         </GlobalProvider>
       </BrowserRouter>
     </>

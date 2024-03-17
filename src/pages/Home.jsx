@@ -10,7 +10,6 @@ import { NavbarAuth } from "../components/NavbarAuth";
 import Cookies from "js-cookie";
 
 export default function Home() {
-  const { data } = useContext(GlobalContext);
 
   return (
     <>

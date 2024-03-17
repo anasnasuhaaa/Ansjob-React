@@ -2,6 +2,7 @@ import { useState, useEffect, createContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 const GlobalContext = createContext();
 
 export function GlobalProvider(props) {
@@ -11,12 +12,18 @@ export function GlobalProvider(props) {
   const [dataDetail, setDataDetail] = useState();
   const [currentId, setCurrentId] = useState(-1);
   let token = Cookies.get("token");
+
   const [inputLogin, setInputLogin] = useState({
     email: "",
     password: "",
     name: "",
     image_url: "",
   });
+
+  const [identity, setIdentity] = useState("")
+
+
+
 
   const [input, setInput] = useState({
     title: "",
@@ -34,7 +41,8 @@ export function GlobalProvider(props) {
 
   // Login
   const hanldeInputLogin = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+    console.log(e.target.value);
     const { name, value } = e.target;
     setInputLogin({ ...inputLogin, [name]: value });
   };
@@ -42,24 +50,26 @@ export function GlobalProvider(props) {
   const handleLogin = (e) => {
     e.preventDefault();
     let { email, password } = inputLogin;
-    console.log(inputLogin);
     axios
-      .post("https://backendexample.sanbersy.com/api/user-login", {
+      .post("https://dev-example.sanbercloud.com/api/login", {
         email,
         password,
       })
       .then((res) => {
         let data = res.data;
         Cookies.set("token", data.token, { expires: 1 });
+        setIdentity(data.user);
         navigate("/");
       })
       .catch((error) => console.log("Error:", error));
-    // End Login
-  };
+      // End Login
+    };
+    console.log(identity);
 
   const handleRegister = (e) => {
     e.preventDefault();
     let { email, password, name, image_url } = inputLogin;
+    console.log(e.target.name);
     axios
       .post("https://dev-example.sanbercloud.com/api/register", {
         email,
@@ -69,7 +79,8 @@ export function GlobalProvider(props) {
       })
       .then((res) => {
         console.log(res);
-      });
+        navigate("/login")
+      }).catch((err) => console.log(err));
   };
 
   const rupiah = (number) => {
@@ -97,6 +108,40 @@ export function GlobalProvider(props) {
     console.log(e.target.value);
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
+  };
+
+  const handleDelete = async (e) => {
+    let idData = e.currentTarget.value;
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          axios
+            .delete(
+              `https://dev-example.sanbercloud.com/api/job-vacancy/${idData}`,
+              { headers: { Authorization: `Bearer ${token}` } }
+            )
+            .then((res) => {
+              navigate(`/list-job-vacancy`);
+              location.reload();
+            });
+        } catch (err) {
+          console.log("Error on submit", err.message);
+        }
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+      }
+    });
   };
 
   const handleReset = () => {
@@ -143,58 +188,16 @@ export function GlobalProvider(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // let {
-    //   title,
-    //   job_description,
-    //   job_qualification,
-    //   job_type,
-    //   job_tenure,
-    //   job_status,
-    //   company_name,
-    //   company_image_url,
-    //   company_city,
-    //   salary_min,
-    //   salary_max,
-    // } = input;
-
     try {
       if (currentId === -1) {
-        const res = await axios.post(
+        await axios.post(
           "https://dev-example.sanbercloud.com/api/job-vacancy",
-          // {
-          //   title,
-          //   job_description,
-          //   job_qualification,
-          //   job_type,
-          //   job_tenure,
-          //   job_status,
-          //   company_name,
-          //   company_image_url,
-          //   company_city,
-          //   salary_min,
-          //   salary_max,
-          // }
           input,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         await axios.put(
           `https://dev-example.sanbercloud.com/api/job-vacancy/${currentId}`,
-          // {
-          //   title,
-          //   job_description,
-          //   job_qualification,
-          //   job_type,
-          //   job_tenure,
-          //   job_status,
-          //   company_name,
-          //   company_image_url,
-          //   company_city,
-          //   salary_min,
-          //   salary_max,
-          // }
           input,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -217,12 +220,12 @@ export function GlobalProvider(props) {
       });
 
       setFetchStatus(true);
-    }catch(err) {
+    } catch (err) {
       console.log("Error on submit", err.message);
     }
   };
 
-  let isState = { data, fetchStatus, dataDetail, input, inputLogin };
+  let isState = { identity, data, fetchStatus, dataDetail, input, inputLogin };
   let isFunction = {
     handleDetail,
     setDataDetail,
@@ -232,6 +235,7 @@ export function GlobalProvider(props) {
     handleInput,
     handleInput,
     handleEdit,
+    handleDelete,
     handleSubmit,
     handleReset,
     hanldeInputLogin,

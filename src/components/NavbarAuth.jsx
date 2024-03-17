@@ -98,7 +98,7 @@ export function NavbarAuth() {
           variant="h6"
           className="mr-4 cursor-pointer font-sans text-xl font-bold py-1.5"
         >
-          <i class="fa-solid fa-briefcase mr-2"></i>
+          <i className="fa-solid fa-briefcase mr-2"></i>
           AnsJob
         </Typography>
         <div className="hidden lg:block">

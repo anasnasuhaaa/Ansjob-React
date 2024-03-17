@@ -25,7 +25,7 @@ export default function TableListJob() {
           {isState.data.map((res, i) => {
             return (
               <Table.Row
-                key={i}
+                key={res.id}
                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
               >
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
@@ -56,7 +56,7 @@ export default function TableListJob() {
                   <Button onClick={isFunction.handleEdit} value={res.id} size="sm" className="px-6" variant="gradient">
                     Edit
                   </Button>
-                  <Button size="sm" color="red" variant="filled">
+                  <Button onClick={isFunction.handleDelete} value={res.id} size="sm" color="red" variant="filled">
                     Delete
                   </Button>
                 </Table.Cell>

@@ -24,9 +24,9 @@ import { Link, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 export function Sidebar() {
-  const { navigate } = useContext(GlobalContext);
+  const { isFunction} = useContext(GlobalContext);
   return (
-    <Card className="h-[calc(100vh-2rem)] w-full max-w-[13rem] p-4 top-0 fixed border-r-2 rounded-none z-50">
+    <Card className="h-dvh w-full max-w-[13rem] p-4 top-0 fixed border-r-2 rounded-none z-50">
       <div className="mb-2 p-4">
         <Typography
           as="a"
@@ -34,7 +34,7 @@ export function Sidebar() {
           variant="h6"
           className="mr-4 cursor-pointer font-sans text-xl font-bold py-1.5"
         >
-          <i class="fa-solid fa-briefcase mr-2"></i>
+          <i className="fa-solid fa-briefcase mr-2"></i>
           AnsJob
         </Typography>
       </div>
@@ -71,7 +71,7 @@ export function Sidebar() {
           onClick={(e) => {
             e.preventDefault()
             Cookies.remove("token");
-            navigate("/");
+            isFunction.navigate("/");
           }}
           className="w-[10em]"
         >
