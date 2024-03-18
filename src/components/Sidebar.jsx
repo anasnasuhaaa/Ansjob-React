@@ -61,12 +61,14 @@ export function Sidebar() {
             Add New Job
           </ListItem>
         </Link>
+        <Link to={"/change-password"}>
         <ListItem className="w-[10em]">
           <ListItemPrefix>
             <KeyIcon className="h-5 w-5" />
           </ListItemPrefix>
           Change Password
         </ListItem>
+        </Link>
         <ListItem
           onClick={(e) => {
             e.preventDefault()

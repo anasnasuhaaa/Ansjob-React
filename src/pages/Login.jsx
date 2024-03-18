@@ -1,4 +1,3 @@
-import { Navbar } from "flowbite-react";
 import { LoginForm } from "../components/Form";
 import { NavbarComponent } from "../components/Navbar";
 

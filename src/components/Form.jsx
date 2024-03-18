@@ -10,11 +10,11 @@ import { Link } from "react-router-dom";
 import GlobalContext from "../context/GlobalContext";
 
 export function RegisterForm() {
-  const {isFunction, isState} = useContext(GlobalContext)
+  const { isFunction, isState } = useContext(GlobalContext);
   return (
     <Card
       color="transparent"
-      className="grid place-items-center"
+      className="flex flex-col justify-center items-center min-h-[90dvh]"
       shadow={false}
     >
       <Typography variant="h4" color="blue-gray">
@@ -24,7 +24,7 @@ export function RegisterForm() {
         Nice to meet you! Enter your details to register.
       </Typography>
       <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96  shadow-xl p-5">
-        <div className="mb-1 flex flex-col gap-6">
+        <div className="mb-1 flex flex-col gap-4">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
             Your Name
           </Typography>
@@ -113,12 +113,12 @@ export function RegisterForm() {
 }
 
 export function LoginForm() {
-  const {isState, isFunction} = useContext(GlobalContext)
+  const { isState, isFunction } = useContext(GlobalContext);
 
   return (
     <Card
       color="transparent"
-      className="grid place-items-center"
+      className="flex flex-col justify-center items-center min-h-[90dvh]"
       shadow={false}
     >
       <Typography variant="h4" color="blue-gray">
@@ -181,11 +181,7 @@ export function LoginForm() {
           containerProps={{ className: "-ml-2.5" }}
           required
         />
-        <Button
-          onClick={isFunction.handleLogin}
-          className="mt-6"
-          fullWidth
-        >
+        <Button onClick={isFunction.handleLogin} className="mt-6" fullWidth>
           login
         </Button>
         <Typography color="gray" className="mt-4 text-center font-normal">
@@ -205,10 +201,13 @@ export function AddNewJobForm() {
   return (
     <Card
       color="transparent"
-      className="grid place-items-center w-full"
+      className="grid place-items-center  w-full"
       shadow={false}
     >
-      <form onSubmit={isFunction.handleSubmit} className="mt-5 mb-2 max-w-screen-xl w-full p-4 shadow-xl">
+      <form
+        onSubmit={isFunction.handleSubmit}
+        className="mt-2 mb-2 border-2 border-gray-200 max-w-screen-xl w-full p-4 shadow-xl"
+      >
         <div className="mb-1 flex flex-col gap-2">
           <Typography
             variant="h6"
@@ -432,8 +431,158 @@ export function AddNewJobForm() {
             </div>
           </div>
         </div>
-        <Button onClick={isFunction.handleSubmit} className="w-full mt-3">Submit</Button>
-        <Button onClick={isFunction.handleReset} variant="outlined" className="w-full mt-2">Reset</Button>
+        <Button onClick={isFunction.handleSubmit} className="w-full mt-3">
+          Submit
+        </Button>
+        <Button
+          onClick={isFunction.handleReset}
+          variant="outlined"
+          className="w-full mt-2"
+        >
+          Reset
+        </Button>
+      </form>
+    </Card>
+  );
+}
+
+export function ChangePasswordForm() {
+  const { isState, isFunction } = useContext(GlobalContext);
+
+  return (
+    <Card
+      color="transparent"
+      className="flex flex-col justify-center items-center min-h-[90dvh]"
+      shadow={false}
+    >
+      <Typography variant="h4" color="blue-gray">
+        Change Password
+      </Typography>
+      <Typography color="gray" className="mt-1 font-normal">
+        Nice to meet you! Enter your details to Change Password.
+      </Typography>
+      <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 shadow-xl p-5">
+        <div className="mb-1 flex  flex-col gap-6">
+          <Typography variant="h6" color="blue-gray" className="-mb-3">
+            Current Password
+          </Typography>
+          <Input
+            size="lg"
+            required
+            type="password"
+            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+            name="current_password"
+            value={isState.inputChangePassword.current_password}
+            onChange={isFunction.handleInputChangePassword}
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
+          />
+          <Typography variant="h6" color="blue-gray" className="-mb-3">
+            New Password
+          </Typography>
+          <Input
+            type="password"
+            size="lg"
+            placeholder="********"
+            name="new_password"
+            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+            value={isState.inputChangePassword.new_password}
+            onChange={isFunction.handleInputChangePassword}
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
+            required
+          />
+          <Typography variant="h6" color="blue-gray" className="-mb-3">
+            Confirm New Password
+          </Typography>
+          <Input
+            type="password"
+            size="lg"
+            name="new_confirm_password"
+            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+            value={isState.inputChangePassword.new_confirm_password}
+            onChange={isFunction.handleInputChangePassword}
+            labelProps={{
+              className: "before:content-none after:content-none",
+            }}
+            required
+          />
+        </div>
+        <Checkbox
+          label={
+            <Typography
+              variant="small"
+              color="gray"
+              required
+              className="flex items-center font-normal"
+            >
+              I agree the
+              <a
+                href="#"
+                className="font-medium transition-colors hover:text-gray-900"
+              >
+                &nbsp;Terms and Conditions
+              </a>
+            </Typography>
+          }
+          containerProps={{ className: "-ml-2.5" }}
+          required
+        />
+        <Button
+          onClick={isFunction.handleChangePassword}
+          className="mt-6"
+          fullWidth
+        >
+          Change Password
+        </Button>
+      </form>
+    </Card>
+  );
+}
+
+export function SearchForm() {
+  const { isState, isFunction } = useContext(GlobalContext);
+
+  return (
+    <Card
+      color="transparent"
+      className="grid place-items-center md:px-8 md:sticky md:top-0 md:z-10 bg-white"
+      shadow={false}
+    >
+      <Typography variant="h4" color="blue-gray" className="mt-2">
+        Explore Your Dream Job
+      </Typography>
+      <form className="mt-4 mb-2 w-full border-2  p-3">
+        <div className=" grid md:grid-cols-2 gap-4">
+          <div>
+            <Typography variant="h6" color="blue-gray" className="mb-3">
+              Job Title
+            </Typography>
+            <Input
+              type="seacrh"
+              size="lg"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+            />
+          </div>
+          <div>
+            <Typography variant="h6" color="blue-gray" className="mb-3">
+              Company Name
+            </Typography>
+            <Input
+              type="seacrh"
+              size="lg"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+            />
+          </div>
+        </div>
       </form>
     </Card>
   );

@@ -89,7 +89,7 @@ export function NavbarComponent() {
   return (
     <Navbar
       fullWidth
-      className= "sticky top-0 z-10  md:px-8 px-5 mx-auto py-3"
+      className= "sticky top-0 z-20  md:px-8 px-5 mx-auto py-3"
     >
       <div className="flex items-center justify-between text-black">
         <Typography

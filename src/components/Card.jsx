@@ -14,19 +14,19 @@ export default function CardComponent() {
 
 
   return isState.data.map((res, i) => (
-    <Card key={i} className=" flex-col md:flex-row  max-w-[36rem] mt-3">
+    <Card key={i} className="hover:border-2 rounded-md hover:transition-shadow hover:border-gray-600 flex-col md:flex-row  max-w-[36rem] mt-3">
       <CardHeader
         shadow={false}
         floated={false}
-        className="m-0 w-2/5 mx-auto object-cover  flex justify-center items-center shrink-0 rounded-r-none"
+        className="m-0 w-2/5 md:w-[40%] mx-auto object-cover  flex justify-center items-center shrink-0 rounded-r-none"
       >
         <img
           src={res.company_image_url}
           alt="card-image"
-          className="h-full w-full object-cover"
+          className="h-full w-full object-contain"
         />
       </CardHeader>
-      <CardBody className="p-5">
+      <CardBody className="p-5 w-full">
         <Typography variant="h6" color="gray" className="mb-1  uppercase">
           {res.company_name}
         </Typography>
@@ -35,9 +35,15 @@ export default function CardComponent() {
         </Typography>
         <Typography
           color="gray"
-          className="mb-8 font-normal min-h-20 max-h-20 overflow-hidden"
+          className="mb-8 font-normal  overflow-hidden"
         >
-          {res.job_description}
+         {res.company_city} | {res.job_type} | {res.job_status ===1 ? "Open" : "Close"}
+        </Typography>
+        <Typography
+          color="gray"
+          className="mb-8 font-bold text-red-700  overflow-hidden"
+        >
+          {isFunction.rupiah(res.salary_min)  } - {isFunction.rupiah(res.salary_max) }
         </Typography>
 
         <Button

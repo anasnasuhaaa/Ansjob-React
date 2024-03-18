@@ -12,8 +12,8 @@ export default function Dashboard() {
       <div className="flex">
         <Sidebar/>
         <div className="w-full ml-[13rem]">
-          <h1 className="font-black text-6xl text-center">WELCOME</h1>
-          <h1>{isState.identity.name}</h1>
+          <h1 className="font-black text-5xl mt-5 text-center">WELCOME TO THE DASHBOARD</h1>
+          <h1 className="font-black text-2xl text-center">You Can Create, Read, Update & Delete Data</h1>
         </div>
       </div>
     </>

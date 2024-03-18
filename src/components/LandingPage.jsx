@@ -1,8 +1,15 @@
 import { Button } from "@material-tailwind/react";
+import { useContext } from "react";
+import GlobalContext from "../context/GlobalContext";
+import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 export default function LandingPage() {
+  const { isFunction } = useContext(GlobalContext);
   return (
     <div className="px-5 md:px-8 min-h-[95dvh] text-white flex gap-3 flex-col bg-hero bg-cover justify-center items-center">
-      <h1 className=" text-5xl md:text-6xl font-bold">Connecting Dreams, Empowering Careers!</h1>
+      <h1 className=" text-5xl md:text-6xl font-bold">
+        Connecting Dreams, Empowering Careers!
+      </h1>
       <p className="text-center">
         Welcome to [JobVacancyWebsiteName], where opportunities meet
         aspirations! Our platform is dedicated to helping you find the perfect
@@ -13,22 +20,30 @@ export default function LandingPage() {
         us today and take the next step towards a fulfilling career!
       </p>
       <div className="flex gap-5">
-        <Button color="white" variant="gradient" size="lg">Get Started</Button>
-        <Button className="flex border-2 border-white" size="lg" >Dashboard 
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-            className="h-4 w-4"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-            />
-          </svg></Button>
+        <Link to={"/job-vacancy"}>
+          <Button color="white" variant="gradient" size="lg">
+            Get Started
+          </Button>
+        </Link>
+        <Link to={!Cookies.get("token") ? "/un-authorized" : "/dashboard"}>
+          <Button className="flex border-2 border-white" size="lg">
+            Dashboard
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+              className="h-4 w-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+              />
+            </svg>
+          </Button>
+        </Link>
       </div>
     </div>
   );

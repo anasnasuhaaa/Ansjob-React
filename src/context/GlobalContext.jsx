@@ -6,25 +6,24 @@ import Swal from "sweetalert2";
 const GlobalContext = createContext();
 
 export function GlobalProvider(props) {
+  let token = Cookies.get("token");
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [fetchStatus, setFetchStatus] = useState(true);
   const [dataDetail, setDataDetail] = useState();
   const [currentId, setCurrentId] = useState(-1);
-  let token = Cookies.get("token");
-
+  const [identity, setIdentity] = useState();
   const [inputLogin, setInputLogin] = useState({
     email: "",
     password: "",
     name: "",
     image_url: "",
   });
-
-  const [identity, setIdentity] = useState("")
-
-
-
-
+  const [inputChangePassword, setInputChangePassword] = useState({
+    current_password: "",
+    new_password: "",
+    new_confirm_password: "",
+  });
   const [input, setInput] = useState({
     title: "",
     job_description: "",
@@ -38,6 +37,11 @@ export function GlobalProvider(props) {
     salary_min: "",
     salary_max: "",
   });
+  const [dataSearch, setDataSearch] = useState([]);
+
+  const handleSearch = (e) => {
+    let query = e.target.value;
+  };
 
   // Login
   const hanldeInputLogin = (e) => {
@@ -60,11 +64,21 @@ export function GlobalProvider(props) {
         Cookies.set("token", data.token, { expires: 1 });
         setIdentity(data.user);
         navigate("/");
+        Swal.fire({
+          title: "Login Success!",
+          text: `Welcome ${data.user.name}`,
+          icon: "success",
+        });
       })
-      .catch((error) => console.log("Error:", error));
-      // End Login
-    };
-    console.log(identity);
+      .catch((error) =>
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Account Not Registered!",
+        })
+      );
+    // End Login
+  };
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -79,8 +93,34 @@ export function GlobalProvider(props) {
       })
       .then((res) => {
         console.log(res);
-        navigate("/login")
-      }).catch((err) => console.log(err));
+        navigate("/login");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleInputChangePassword = (e) => {
+    const { name, value } = e.target;
+    setInputChangePassword({ ...inputChangePassword, [name]: value });
+  };
+
+  const handleChangePassword = (e) => {
+    e.preventDefault();
+    console.log(inputChangePassword);
+    axios
+      .post(
+        "https://dev-example.sanbercloud.com/api/change-password",
+        inputChangePassword,
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        Swal.fire({
+          title: "Success Change Password!",
+          icon: "success",
+          showConfirmButton: false,
+        });
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
   };
 
   const rupiah = (number) => {
@@ -195,6 +235,15 @@ export function GlobalProvider(props) {
           input,
           { headers: { Authorization: `Bearer ${token}` } }
         );
+        Swal.fire({
+          title: "Succes Add Job!",
+          text: "You clicked the button!",
+          icon: "success",
+        });
+        setTimeout(() => {
+          navigate("/list-job-vacancy");
+          location.reload();
+        }, 1500);
       } else {
         await axios.put(
           `https://dev-example.sanbercloud.com/api/job-vacancy/${currentId}`,
@@ -203,6 +252,15 @@ export function GlobalProvider(props) {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
+        Swal.fire({
+          title: "Success Update!",
+          icon: "success",
+          showConfirmButton: false,
+        });
+        setTimeout(() => {
+          navigate("/list-job-vacancy");
+          location.reload();
+        }, 1500);
       }
       setCurrentId(-1);
       setInput({
@@ -225,14 +283,21 @@ export function GlobalProvider(props) {
     }
   };
 
-  let isState = { identity, data, fetchStatus, dataDetail, input, inputLogin };
+  let isState = {
+    identity,
+    data,
+    fetchStatus,
+    dataDetail,
+    input,
+    inputLogin,
+    inputChangePassword,
+  };
   let isFunction = {
     handleDetail,
     setDataDetail,
     navigate,
     rupiah,
     setInput,
-    handleInput,
     handleInput,
     handleEdit,
     handleDelete,
@@ -241,6 +306,8 @@ export function GlobalProvider(props) {
     hanldeInputLogin,
     handleLogin,
     handleRegister,
+    handleChangePassword,
+    handleInputChangePassword,
   };
 
   return (
