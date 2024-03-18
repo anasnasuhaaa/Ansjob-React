@@ -5,7 +5,6 @@ import GlobalContext from "../context/GlobalContext";
 
 export default function Dashboard() {
   const {isState} = useContext(GlobalContext)
-  console.log(isState.identity);
   return (
     <>
       <NavbarAuth />

@@ -110,12 +110,10 @@ export function GlobalProvider(props) {
   };
   let identity = localStorage.getItem("identity");
   let dataIdentity = JSON.parse(identity);
-  console.log(dataIdentity);
 
   const handleRegister = (e) => {
     e.preventDefault();
     let { email, password, name, image_url } = inputLogin;
-    console.log(e.target.name);
     axios
       .post("https://dev-example.sanbercloud.com/api/register", {
         email,
@@ -124,7 +122,6 @@ export function GlobalProvider(props) {
         image_url,
       })
       .then((res) => {
-        console.log(res);
         navigate("/login");
       })
       .catch((err) => console.log(err));
@@ -137,7 +134,6 @@ export function GlobalProvider(props) {
 
   const handleChangePassword = (e) => {
     e.preventDefault();
-    console.log(inputChangePassword);
     axios
       .post(
         "https://dev-example.sanbercloud.com/api/change-password",
@@ -183,7 +179,6 @@ export function GlobalProvider(props) {
   };
 
   const handleInput = (e) => {
-    console.log(e.target.value);
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
   };
@@ -239,13 +234,11 @@ export function GlobalProvider(props) {
   };
   const handleEdit = (e) => {
     let idData = e.currentTarget.value;
-    console.log(idData);
     setCurrentId(idData);
     axios
       .get(`https://dev-example.sanbercloud.com/api/job-vacancy/${idData}`)
       .then((res) => {
         let data = res.data;
-        console.log(data);
         navigate(`/list-job-vacancy/edit/${idData}`);
         setInput({
           title: data.title,
