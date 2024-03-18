@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function LandingPage() {
   const { isFunction } = useContext(GlobalContext);
   return (
-    <div className="px-5 md:px-8 min-h-[95dvh] text-white flex gap-3 flex-col bg-hero bg-cover justify-center items-center">
+    <div className="landing-page px-5 md:px-8 min-h-[95dvh] text-white flex gap-3 flex-col bg-cover justify-center items-center">
       <h1 className=" text-5xl md:text-6xl font-bold">
         Connecting Dreams, Empowering Careers!
       </h1>

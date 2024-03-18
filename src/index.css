@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+
 #root{
     min-height: 100dvh;
+}
+.landing-page{
+    background-image: url("./assets/bgimg.jpg")
 }
