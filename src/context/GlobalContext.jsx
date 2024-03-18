@@ -12,7 +12,7 @@ export function GlobalProvider(props) {
   const [fetchStatus, setFetchStatus] = useState(true);
   const [dataDetail, setDataDetail] = useState();
   const [currentId, setCurrentId] = useState(-1);
-  const [identity, setIdentity] = useState();
+  // const [identity, setIdentity] = useState([]);
   const [inputLogin, setInputLogin] = useState({
     email: "",
     password: "",
@@ -37,16 +37,16 @@ export function GlobalProvider(props) {
     salary_min: "",
     salary_max: "",
   });
-  const [dataSearch, setDataSearch] = useState([]);
+  const [search, setSearch] = useState("");
+  const [whatSearch, setWhatSearch] = useState(0);
 
   const handleSearch = (e) => {
-    let query = e.target.value;
+    setSearch(e.target.value);
+    e.target.name === "title" ? setWhatSearch(1) : setWhatSearch(0);
   };
-
   // Login
   const hanldeInputLogin = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
     const { name, value } = e.target;
     setInputLogin({ ...inputLogin, [name]: value });
   };
@@ -62,13 +62,19 @@ export function GlobalProvider(props) {
       .then((res) => {
         let data = res.data;
         Cookies.set("token", data.token, { expires: 1 });
-        setIdentity(data.user);
+        localStorage.setItem("identity", JSON.stringify(data.user));
         navigate("/");
         Swal.fire({
-          title: "Login Success!",
-          text: `Welcome ${data.user.name}`,
+          position: "top-end",
           icon: "success",
+          title: `Welcome ${data.user.name}`,
+          showConfirmButton: false,
+          timer: 1200,
         });
+        setTimeout(() =>{
+          location.reload()
+        },1200)
+        // location.reload();
       })
       .catch((error) =>
         Swal.fire({
@@ -79,6 +85,32 @@ export function GlobalProvider(props) {
       );
     // End Login
   };
+  const handleLogout = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to log out!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Logout!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Cookies.remove("token");
+        localStorage.removeItem("identity");
+        isFunction.navigate("/");
+        Swal.fire({
+          title: "Success Logout!",
+          text: "Your account has been logout.",
+          icon: "success",
+        });
+      }
+    });
+  };
+  let identity = localStorage.getItem("identity");
+  let dataIdentity = JSON.parse(identity);
+  console.log(dataIdentity);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -120,7 +152,13 @@ export function GlobalProvider(props) {
         });
         navigate("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "The input data doesn't match, check again!",
+        })
+      );
   };
 
   const rupiah = (number) => {
@@ -291,6 +329,9 @@ export function GlobalProvider(props) {
     input,
     inputLogin,
     inputChangePassword,
+    search,
+    whatSearch,
+    dataIdentity,
   };
   let isFunction = {
     handleDetail,
@@ -308,6 +349,8 @@ export function GlobalProvider(props) {
     handleRegister,
     handleChangePassword,
     handleInputChangePassword,
+    handleSearch,
+    handleLogout,
   };
 
   return (

@@ -22,9 +22,10 @@ import { useContext } from "react";
 import GlobalContext from "../context/GlobalContext";
 import { Link, Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 export function Sidebar() {
-  const { isFunction} = useContext(GlobalContext);
+  const { isFunction } = useContext(GlobalContext);
   return (
     <Card className="h-dvh w-full max-w-[13rem] p-4 top-0 fixed border-r-2 rounded-none z-50">
       <div className="mb-2 p-4">
@@ -39,12 +40,14 @@ export function Sidebar() {
         </Typography>
       </div>
       <List>
+        <Link to={"/profile"}>
         <ListItem className="w-[10em]">
           <ListItemPrefix>
             <UserCircleIcon className="h-5 w-5" />
           </ListItemPrefix>
           Profile
         </ListItem>
+        </Link>
         <Link to={"/list-job-vacancy"}>
           <ListItem className="w-[10em]">
             <ListItemPrefix>
@@ -62,21 +65,14 @@ export function Sidebar() {
           </ListItem>
         </Link>
         <Link to={"/change-password"}>
-        <ListItem className="w-[10em]">
-          <ListItemPrefix>
-            <KeyIcon className="h-5 w-5" />
-          </ListItemPrefix>
-          Change Password
-        </ListItem>
+          <ListItem className="w-[10em]">
+            <ListItemPrefix>
+              <KeyIcon className="h-5 w-5" />
+            </ListItemPrefix>
+            Change Password
+          </ListItem>
         </Link>
-        <ListItem
-          onClick={(e) => {
-            e.preventDefault()
-            Cookies.remove("token");
-            isFunction.navigate("/");
-          }}
-          className="w-[10em]"
-        >
+        <ListItem onClick={isFunction.handleLogout} className="w-[10em]">
           <ListItemPrefix>
             <PowerIcon className="h-5 w-5" />
           </ListItemPrefix>

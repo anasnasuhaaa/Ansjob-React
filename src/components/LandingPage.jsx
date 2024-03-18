@@ -25,7 +25,7 @@ export default function LandingPage() {
             Get Started
           </Button>
         </Link>
-        <Link to={!Cookies.get("token") ? "/un-authorized" : "/dashboard"}>
+        <Link to={!Cookies.get("token") ? "/login" : "/dashboard"}>
           <Button className="flex border-2 border-white" size="lg">
             Dashboard
             <svg

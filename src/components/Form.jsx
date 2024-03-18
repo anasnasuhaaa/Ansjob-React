@@ -439,7 +439,7 @@ export function AddNewJobForm() {
           variant="outlined"
           className="w-full mt-2"
         >
-          Reset
+          Clear
         </Button>
       </form>
     </Card>
@@ -563,6 +563,8 @@ export function SearchForm() {
             <Input
               type="seacrh"
               size="lg"
+              name="title"
+              onChange={isFunction.handleSearch}
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",
@@ -576,6 +578,8 @@ export function SearchForm() {
             <Input
               type="seacrh"
               size="lg"
+              name="company_name"
+              onChange={isFunction.handleSearch}
               className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
               labelProps={{
                 className: "before:content-none after:content-none",

@@ -10,9 +10,9 @@ import Dashboard from "./pages/Dashborad";
 import DashboardTable from "./pages/DashboradTable";
 import DashboardAddNewJob from "./pages/DashboardAddNewJob";
 import NotFound from "./pages/404";
-import UnAuthorized from "./pages/401";
 import Cookies from "js-cookie";
 import ChangePassword from "./pages/ChangePassword";
+import DashboardProfile from "./pages/DashboardProfile";
 
 function App() {
   return (
@@ -27,10 +27,10 @@ function App() {
             <Route path="/job-vacancy" element={<JobVacancy />}></Route>
             <Route path="/job-vacancy/:id" element={<JobDetail />}></Route>
             <Route path="*" element={<NotFound />}></Route>
-            <Route path="/un-authorized" element={<UnAuthorized />}></Route>
             {Cookies.get("token") && (
               <>
                 <Route path="/dashboard" element={<Dashboard />}></Route>
+                <Route path="/profile" element={<DashboardProfile/>}></Route>
                 <Route
                   path="/list-job-vacancy"
                   element={<DashboardTable />}

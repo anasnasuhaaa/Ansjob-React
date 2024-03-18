@@ -9,10 +9,11 @@ import {
 } from "@material-tailwind/react";
 
 import { Link } from "react-router-dom";
-
+import GlobalContext from "../context/GlobalContext";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 function NavList() {
+  const { isState } = useContext(GlobalContext);
   return (
     <ul
       className={`my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 ${
@@ -70,13 +71,23 @@ function NavList() {
         >
           Dashboard
         </Link>
-      </Typography>
+        </Typography>
+        <Typography>
+
+        <Link
+          to="/profile"
+          className="flex items-center hover:text-black  hover:font-bold transition-colors"
+          >
+          <img className="aspect-square object-cover w-8 rounded-full" src={isState.dataIdentity.image_url} alt="" />
+        </Link>
+          </Typography>
     </ul>
   );
 }
 
 export function NavbarAuth() {
   const [openNav, setOpenNav] = React.useState(false);
+  
 
   const handleWindowResize = () =>
     window.innerWidth >= 960 && setOpenNav(false);
